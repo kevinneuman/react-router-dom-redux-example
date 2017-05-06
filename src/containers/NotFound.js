@@ -12,18 +12,22 @@ const paperStyle = {
     display: 'inline-block',
 };
 
+let counterInterval;
+
 class NotFound extends Component {
     componentDidMount() {
         this.startCounter();
     }
 
+    componentWillUnmount() {
+        clearInterval(counterInterval);
+
+        this.props.counterReset();
+    }
+
     startCounter() {
-        const counterInterval = setInterval(() => {
+        counterInterval = setInterval(() => {
             if (this.props.counter.value < 1) {
-                clearInterval(counterInterval);
-
-                this.props.counterReset();
-
                 this.props.history.push('/');
             }
 
